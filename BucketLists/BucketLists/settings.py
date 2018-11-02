@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'bucket_lists_app'
+    'bucket_lists_app',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
