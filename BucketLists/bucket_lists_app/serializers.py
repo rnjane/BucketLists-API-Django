@@ -21,14 +21,16 @@ class UserSerializer(serializers.ModelSerializer):
         raise(serializers.ValidationError('Please provide username, email, password and password confirmation'))
 
 
-# class BucketListsSerializer(serializers.ModelSerializer):
-#     bucket_list_items = serializers.RelatedField(many=True)
-#     class Meta:
-#         model = models.BucketListsModel
-#         fields = ['name', 'date_created', 'date_modified', 'bucket_list_items']
+class BucketListsSerializer(serializers.ModelSerializer):
+    bucket_items = serializers.RelatedField(many=True, read_only=True)
+    owner = serializers.ReadOnlyField(source='owner.username')
+    class Meta:
+        model = models.BucketListsModel
+        fields = ['owner', 'name', 'date_created', 'date_modified', 'bucket_items', 'id']
         
 
-# class BucketListItemsSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = models.BucketItemsModel
-#         fields = ['name', 'date_created', 'date_modified', 'bucketlist']
+class BucketListItemsSerializer(serializers.ModelSerializer):
+    bucketlist = serializers.ReadOnlyField(source='bucketlist.name')
+    class Meta:
+        model = models.BucketItemsModel
+        fields = ['name', 'date_created', 'date_modified', 'bucketlist', 'id']
